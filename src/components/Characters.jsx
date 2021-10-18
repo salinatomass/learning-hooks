@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useFavoriteContext } from "../context/providers/FavoriteContext";
 
 import "../styles/components/Characters.css";
@@ -9,6 +9,7 @@ const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const { favorites, addToFavorites } = useFavoriteContext();
   const [search, setSearch] = useState("");
+  const searchInput = useRef(null);
 
   const filteredCharacters = useMemo(() => {
     return characters.filter((item) =>
@@ -17,7 +18,7 @@ const Characters = () => {
   }, [characters, search]);
 
   const handleSearch = (e) => {
-    setSearch(e.target.value);
+    setSearch(searchInput.current.value);
   };
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const Characters = () => {
       <div className="Characters-search">
         <input
           type="text"
+          ref={searchInput}
           value={search}
           placeholder="Search a character"
           onChange={handleSearch}
