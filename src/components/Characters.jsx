@@ -1,38 +1,16 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useFavoriteContext } from "../context/providers/FavoriteContext";
 
 import "../styles/components/Characters.css";
 
-const intitialState = {
-  favorites: [],
-};
-
-const favoriteActions = {
-  ADD_TO_FAVORITE: "ADD_TO_FAVORITE",
-};
-
-const favoriteReducer = (state, action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case favoriteActions.ADD_TO_FAVORITE:
-      return {
-        ...state,
-        favorites: [...state.favorites, payload],
-      };
-    default:
-      return state;
-  }
-};
+const API = "https://rickandmortyapi.com/api/character/";
 
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
-  const [state, dispatch] = useReducer(favoriteReducer, intitialState);
-
-  const handleClick = (favorite) => {
-    dispatch({ type: favoriteActions.ADD_TO_FAVORITE, payload: favorite });
-  };
+  const { favorites, addToFavorites } = useFavoriteContext();
 
   useEffect(() => {
-    fetch("https://rickandmortyapi.com/api/character/")
+    fetch(API)
       .then((response) => response.json())
       .then((data) => setCharacters(data.results))
       .catch((err) => console.error(err));
@@ -41,17 +19,18 @@ const Characters = () => {
   return (
     <div className="Characters">
       <div className="Characters-favorites">
-        {state.favorites.length > 0 && (
+        {favorites.length > 0 && (
           <>
             <h2>Favorites:</h2>
             <ul>
-              {state.favorites.map((favorite) => (
-                <li key={favorite.id}>favorite.name</li>
+              {favorites.map((favorite) => (
+                <li key={favorite.id}>{favorite.name}</li>
               ))}
             </ul>
           </>
         )}
       </div>
+
       <div className="Characters-container">
         {characters.map((character) => (
           <article className="Characters-item" key={character.id}>
@@ -80,7 +59,7 @@ const Characters = () => {
             <button
               type="button"
               className="Characters-button"
-              onClick={() => handleClick(character)}
+              onClick={() => addToFavorites(character)}
             >
               Add to favorite
             </button>
