@@ -3,6 +3,7 @@ import { useFavoriteContext } from "../context/providers/FavoriteContext";
 import useCharacters from "../hooks/useCharacters";
 
 import "../styles/components/Characters.css";
+import Character from "./Character";
 import Search from "./Search";
 
 const API = "https://rickandmortyapi.com/api/character/";
@@ -46,37 +47,7 @@ const Characters = () => {
 
       <div className="Characters-container">
         {filteredCharacters.map((character) => (
-          <article className="Characters-item" key={character.id}>
-            <figure className="Characters-image">
-              <img src={character.image} alt={character.name} />
-              <div className="Characters-description">
-                <p>
-                  <span>Status: </span>
-                  {character.status}
-                </p>
-                <p>
-                  <span>Gender: </span>
-                  {character.gender}
-                </p>
-                <p>
-                  <span>Specie: </span>
-                  {character.species}
-                </p>
-                <p>
-                  <span>Origin: </span>
-                  {character.origin.name}
-                </p>
-              </div>
-            </figure>
-            <h3 className="Characters-name">{character.name}</h3>
-            <button
-              type="button"
-              className="Characters-button"
-              onClick={() => addToFavorites(character)}
-            >
-              Add to favorite
-            </button>
-          </article>
+          <Character character={character} addToFavorites={addToFavorites} />
         ))}
       </div>
     </div>
