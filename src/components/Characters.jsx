@@ -8,6 +8,17 @@ const API = "https://rickandmortyapi.com/api/character/";
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const { favorites, addToFavorites } = useFavoriteContext();
+  const [search, setSearch] = useState("");
+
+  const filteredCharacters = useMemo(() => {
+    return characters.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [characters, search]);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
   useEffect(() => {
     fetch(API)
@@ -31,8 +42,17 @@ const Characters = () => {
         )}
       </div>
 
+      <div className="Characters-search">
+        <input
+          type="text"
+          value={search}
+          placeholder="Search a character"
+          onChange={handleSearch}
+        />
+      </div>
+
       <div className="Characters-container">
-        {characters.map((character) => (
+        {filteredCharacters.map((character) => (
           <article className="Characters-item" key={character.id}>
             <figure className="Characters-image">
               <img src={character.image} alt={character.name} />
