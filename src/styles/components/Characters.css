@@ -1,10 +1,15 @@
-.Characters {
+.Characters-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 28px;
   padding-top: 16px;
   padding-bottom: 72px;
+}
+
+.Characters-item {
+  width: 100%;
+  height: fit-content;
 }
 
 .Characters-image {
@@ -42,8 +47,25 @@
   color: #98ca3f;
   font-weight: bold;
 }
-.Characters-item:hover > .Characters-image .Characters-description {
+.Characters-image:hover > .Characters-description {
   display: flex;
+}
+
+.Characters-name {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.Characters-button {
+  width: 120px;
+  padding: 10px 0;
+  background: #98ca3f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 1px 1px 8px 0 #333333;
+  box-shadow: 1px 0px 4px 0px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 748px) {
