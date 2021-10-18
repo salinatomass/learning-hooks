@@ -1,0 +1,16 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.Header button {
+  width: 120px;
+  padding: 10px 0;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  box-shadow: 1px 0px 4px 0px rgba(0, 0, 0, 0.3);
+}

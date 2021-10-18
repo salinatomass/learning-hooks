@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import "../styles/components/Header.css";
+
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -8,8 +10,8 @@ const Header = () => {
   };
 
   return (
-    <div className="header">
-      <h1>ReactHooks</h1>
+    <div className="Header">
+      <h1>ReactHooks + Rick And Morty</h1>
       <button type="button" onClick={handleClick}>
         {darkMode ? "DarkMode" : "LightMode"}
       </button>
