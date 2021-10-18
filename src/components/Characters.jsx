@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useFavoriteContext } from "../context/providers/FavoriteContext";
 
 import "../styles/components/Characters.css";
+import Search from "./Search";
 
 const API = "https://rickandmortyapi.com/api/character/";
 
@@ -17,9 +18,9 @@ const Characters = () => {
     );
   }, [characters, search]);
 
-  const handleSearch = (e) => {
-    setSearch(searchInput.current.value);
-  };
+  const handleSearch = useCallback(() => {
+    return setSearch(searchInput.current.value);
+  }, []);
 
   useEffect(() => {
     fetch(API)
@@ -43,15 +44,11 @@ const Characters = () => {
         )}
       </div>
 
-      <div className="Characters-search">
-        <input
-          type="text"
-          ref={searchInput}
-          value={search}
-          placeholder="Search a character"
-          onChange={handleSearch}
-        />
-      </div>
+      <Search
+        search={search}
+        searchInput={searchInput}
+        handleSearch={handleSearch}
+      />
 
       <div className="Characters-container">
         {filteredCharacters.map((character) => (
