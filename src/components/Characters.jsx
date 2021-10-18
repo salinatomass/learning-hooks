@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import { useFavoriteContext } from "../context/providers/FavoriteContext";
+import useCharacters from "../hooks/useCharacters";
 
 import "../styles/components/Characters.css";
 import Search from "./Search";
@@ -7,7 +8,7 @@ import Search from "./Search";
 const API = "https://rickandmortyapi.com/api/character/";
 
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
+  const characters = useCharacters(API);
   const { favorites, addToFavorites } = useFavoriteContext();
   const [search, setSearch] = useState("");
   const searchInput = useRef(null);
@@ -20,13 +21,6 @@ const Characters = () => {
 
   const handleSearch = useCallback(() => {
     return setSearch(searchInput.current.value);
-  }, []);
-
-  useEffect(() => {
-    fetch(API)
-      .then((response) => response.json())
-      .then((data) => setCharacters(data.results))
-      .catch((err) => console.error(err));
   }, []);
 
   return (
